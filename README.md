@@ -10,6 +10,10 @@ This project is licensed under the [MIT License](LICENSE).
 
 The data architecture for this project follows Medallion Architecture **Bronze**, **Silver**, and **Gold** layers.
 
+<img width="1068" height="696" alt="image" src="https://github.com/user-attachments/assets/0f8ceb79-1dcd-4f33-8cb6-b0bc331b69a1" />
+
+
+
 **Rationale:**
 
 The Medallion Architecture was chosen as a result of the size (11 MB) and data types (.csv) of the combined dataset. Whilst a KIMBALL architecture is well-suited to Star schemas, it relies on fact and dimension tables consisting of numeric metrics, which did not appear in the data source adn I lacked context to create them, and descriptive context to produce a reliable Star schema. Furthermore, by skipping the creation of an Enterprise Data Warehouse (EDW), therein lies a risk to data integrity.
