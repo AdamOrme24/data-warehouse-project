@@ -35,7 +35,7 @@ The ETL method for this project included actions for each stage of the process:
 
 **Technique:** File parsing
 
-**Rationale:**
+**Rationale:** The full extraction was completed due to the limited size of the source dataset adn the lack of a requirement to maintain state tracking or monitor bandwidth during extraction. The pull extraction was chosen because it allows for easier error handling and isolation of extraction failures, as well as the fact that the source dataset is static and thus not affected by data-staleness. File parsing was used because the source dataset was stored entirely as .csv files. 
 
 ### Transformation:
 Data enrichment, Data integration, Derived columns, Data normalisation & standardisation, Business rules and logic, Data aggregations
@@ -56,7 +56,7 @@ Data enrichment, Data integration, Derived columns, Data normalisation & standar
 
 • Outlier detection
 
-**Rationale:**
+**Rationale:** De-duplication helps to prevent key metrics being skewed and will save computational resources. Data filtering decreases the volume of scanned data, making downstream database queries and dashboard renders significantly faster. Missing data was handled with COALESCE and NULLIF operations to remove bad nulls. TRIM operations was used to handle poorly-formatted data. Statistical outliers were identified and removed by using WINDOW operations with CASE WHEN functions to find values more than 3 standard deviations from the mean.
 
 ### Loading:
 **Type:** Batch processing
@@ -65,8 +65,4 @@ Data enrichment, Data integration, Derived columns, Data normalisation & standar
 
 **SCD:** Type 1
 
-**Rationale:**
-
-
-
-
+**Rationale:**Processing data in massive blocks allows the SQL engine to optimize memory usage, disk I/O, and index updates much better than trickling rows one by one, furthermore, the server hosting the Data Warehouse is hosted in MS Azure, therefore, batch processing allows the cloud resource to be spun up and down immediately at the beginning and end of the process. The TRUNCATE & INSERT loading is used so any historical data corruption, deleted source records, or sync errors from previous days are automatically wiped out, and the pipeline avoids expensive MERGE or UPDATE logic, removing the need for complex key-matching code.
