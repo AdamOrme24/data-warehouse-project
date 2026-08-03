@@ -16,7 +16,7 @@ The data architecture for this project follows Medallion Architecture **Bronze**
 
 **Rationale:**
 
-The Medallion Architecture was chosen as a result of the size (11 MB) and data types (.csv) of the combined dataset. Whilst a KIMBALL architecture is well-suited to Star schemas, it relies on fact and dimension tables consisting of numeric metrics, which did not appear in the data source adn I lacked context to create them, and descriptive context to produce a reliable Star schema. Furthermore, by skipping the creation of an Enterprise Data Warehouse (EDW), therein lies a risk to data integrity.
+The Medallion Architecture was chosen as a result of the size (11 MB) and data types (.csv) of the combined dataset. Whilst a KIMBALL architecture is well-suited to Star schemas, it relies on fact and dimension tables consisting of numeric metrics, which did not appear in the data source and I lacked context to create them, and descriptive context to produce a reliable Star schema. Furthermore, by skipping the creation of an Enterprise Data Warehouse (EDW), therein lies a risk to data integrity.
 
 The Medallion structure followed the Bronze, Silver, Gold structure, ensuring the entire raw dataset was loaded into the bronze layer, a task which was completed as a full load due to the small data size, without any loss of data. Medallion is tailored for files and tables, with schema enforcement applied incrementally at the Silver and Gold stages.
 
@@ -35,7 +35,7 @@ The ETL method for this project included actions for each stage of the process:
 
 **Technique:** File parsing
 
-**Rationale:** The full extraction was completed due to the limited size of the source dataset adn the lack of a requirement to maintain state tracking or monitor bandwidth during extraction. The pull extraction was chosen because it allows for easier error handling and isolation of extraction failures, as well as the fact that the source dataset is static and thus not affected by data-staleness. File parsing was used because the source dataset was stored entirely as .csv files. 
+**Rationale:** The full extraction was completed due to the limited size of the source dataset and the lack of a requirement to maintain state tracking or monitor bandwidth during extraction. The pull extraction was chosen because it allows for easier error handling and isolation of extraction failures, as well as the fact that the source dataset is static and thus not affected by data-staleness. File parsing was used because the source dataset was stored entirely as .csv files.
 
 ### Transformation:
 Data enrichment, Data integration, Derived columns, Data normalisation & standardisation, Business rules and logic, Data aggregations
